@@ -1,0 +1,5 @@
+packages:
+  - net-tools
+  - vim
+  - libselinux-python
+  - git
