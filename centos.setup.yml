@@ -1,0 +1,14 @@
+- name: Run some base setup for Centos 7 systems
+  hosts: service.cwalops.ca
+  vars:
+    centos_packages:
+
+  tasks:
+    - name: Install base packages, list {{packages}}
+      yum:
+        name: "{{packages}}"
+        state: latest
+      become: true
+
+    - include_role:
+        name: docker
