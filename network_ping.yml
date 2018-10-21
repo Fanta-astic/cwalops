@@ -1,0 +1,12 @@
+# @Author: cole
+# @Date:   2018-10-19T17:23:50-04:00
+# @Filename: network_ping.yml
+# @Last modified by:   cole
+# @Last modified time: 2018-10-19T17:33:23-04:00
+- name: ICMP Ping all hosts from localhost
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: PING!
+      shell: ping -c 3 {{item}}
+      loop: "{{groups['all']}}"
