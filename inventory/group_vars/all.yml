@@ -3,3 +3,7 @@ packages:
   - vim
   - libselinux-python
   - git
+  - nmap
+  - nmap-ncat
+  - telnet
+  - tcpdump
