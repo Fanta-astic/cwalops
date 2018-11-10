@@ -2,21 +2,25 @@
 # @Date:   2018-10-18T21:48:44-04:00
 # @Filename: centos.setup.yml
 # @Last modified by:   cole
-# @Last modified time: 2018-11-10T12:49:41-05:00
+# @Last modified time: 2018-11-10T13:08:30-05:00
 
 
 
-- name: Run some base setup for Centos 7 systems
+- name: Install some baseline packages to get the system setup
   hosts: "{{host|default('service.cwalops.ca')}}"
   vars:
     centos_packages:
 
   tasks:
     - name: Install base packages, list {{packages}}
+      tags: packages
       yum:
         name: "{{packages}}"
         state: latest
       become: true
 
     - include_role:
+      tags: docker
         name: docker
+
+        
