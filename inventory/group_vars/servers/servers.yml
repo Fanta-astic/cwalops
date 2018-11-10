@@ -1,0 +1,14 @@
+# @Author: cole
+# @Date:   2018-11-10T13:11:19-05:00
+# @Filename: servers.yml
+# @Last modified by:   cole
+# @Last modified time: 2018-11-10T13:20:47-05:00
+packages:
+  - net-tools
+  - vim
+  - libselinux-python
+  - git
+  - nmap
+  - nmap-ncat
+  - telnet
+  - tcpdump
