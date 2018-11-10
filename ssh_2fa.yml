@@ -1,0 +1,57 @@
+# @Author: cole
+# @Date:   2018-10-27T19:38:51-04:00
+# @Filename: ssh_2fa.yml
+# @Last modified by:   cole
+# @Last modified time: 2018-11-10T12:44:39-05:00
+
+
+
+- name: Verify ssh and enable 2FA - Only works for the running user
+  hosts: "{{group|default('tuxlab.cwalops.ca')}}"
+  vars:
+    tfa_packages:
+      - ssh
+      - libpam-google-authenticator
+  tasks:
+    - name: Verify {{tfa_packages}} are present
+      apt:
+        name: "{{tfa_packages}}"
+        state: present
+
+    - name: Run google-authenticator setup
+      shell: google-authenticator --time-based --disallow-reuse --force --window-size=3 --rate-limit=3 --rate-time=30
+      register: authn_out
+
+    - debug:
+        var: authn_out.stdout_lines
+
+    - name: Configure pamd for 2fa
+      lineinfile:
+        path: /etc/pam.d/sshd
+        line: "{{item}}"
+        state: present
+      loop:
+        - '@include common-password'
+        - 'auth required pam_google_authenticator.so'
+
+    - name: Enable 2fa in pamd
+      lineinfile:
+        path: /etc/pam.d/sshd
+        regexp: ^.*@include common-auth
+        line: '#@include common-auth'
+
+    - name: Configure sshd for 2fa
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^.*ChallengeResponseAuthentication
+        line: "{{item}}"
+        state: present
+      loop:
+        - ChallengeResponseAuthentication
+        - UsePAM yes
+        - AuthenticationMethods publickey,password publickey,keyboard-interactive
+
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted

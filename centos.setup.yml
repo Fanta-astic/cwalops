@@ -1,5 +1,13 @@
+# @Author: cole
+# @Date:   2018-10-18T21:48:44-04:00
+# @Filename: centos.setup.yml
+# @Last modified by:   cole
+# @Last modified time: 2018-11-10T12:49:41-05:00
+
+
+
 - name: Run some base setup for Centos 7 systems
-  hosts: service.cwalops.ca
+  hosts: "{{host|default('service.cwalops.ca')}}"
   vars:
     centos_packages:
 
