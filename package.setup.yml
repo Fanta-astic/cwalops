@@ -29,9 +29,9 @@
       template:
         src:         "{{item.src}}"
         dest:        /{{item.path|regex_replace('.j2$','')}}
-      with_filetree: "{{playbook_dir}}/templates/system"
+      with_filetree: "{{playbook_dir}}/templates/system/common"
       when:          item.state == 'file'
 
     - name:          Reboot to apply all configs
-      tags: reboot, system
+      tags:          reboot, system
       reboot:
