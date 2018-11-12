@@ -1,26 +1,37 @@
-# @Author: cole
-# @Date:   2018-10-18T21:48:44-04:00
-# @Filename: centos.setup.yml
-# @Last modified by:   cole
+# @Author:           cole
+# @Date:             2018-10-18T21:48:44-04:00
+# @Filename:         centos.setup.yml
+# @Last modified by: cole
 # @Last modified time: 2018-11-10T13:08:30-05:00
 
 
 
-- name: Install some baseline packages to get the system setup
-  hosts: "{{host|default('service.cwalops.ca')}}"
+- name:              Install some baseline packages to get the system setup
+  hosts:             "{{host|default('service.cwalops.ca')}}"
   vars:
     centos_packages:
 
   tasks:
-    - name: Install base packages, list {{packages}}
-      tags: packages
+    - name:          Install base packages, list {{packages}}
+      tags:          packages
       yum:
-        name: "{{packages}}"
-        state: latest
-      become: true
+        name:        "{{packages}}"
+        state:       latest
+      become:        true
 
-    - include_role:
-      tags: docker
-        name: docker
+    - name:          Install docker
+      include_role:
+        name:        docker
+      tags:          docker
 
-        
+    - name:          Template system files
+      tags:          system
+      template:
+        src:         "{{item.src}}"
+        dest:        /{{item.path|regex_replace('.j2$','')}}
+      with_filetree: "{{playbook_dir}}/templates/system"
+      when:          item.state == 'file'
+
+    - name:          Reboot to apply all configs
+      tags: reboot, system
+      reboot:

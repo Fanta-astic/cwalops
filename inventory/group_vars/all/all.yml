@@ -8,7 +8,7 @@ ssh:
   port:             '22'
   listen:           '0.0.0.0'
   root_login:       'no'
-  password_auth:    'no'
+  password_auth:    'yes'
   x11_forward:      'no'
   client_alive_int: '300' #send null packet every 5 mins
   client_alive_max: '6'   #disconnect ssh if inactive for 6 alive intervals
