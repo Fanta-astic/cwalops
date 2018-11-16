@@ -4,6 +4,8 @@
 # @Last modified by: cole
 # @Last modified time: 2018-11-10T13:32:25-05:00
 
+
+
 ssh:
   port:             '22'
   listen:           '0.0.0.0'
@@ -19,3 +21,37 @@ ssh:
   #     params:
   #       - 'X11Forwading yes'
   #       - 'PermitTTY yes'
+
+
+#===============================================================================
+# Nameservers
+#===============================================================================
+domain: cwalops.ca
+
+dns:
+  internal_1:
+    ip: 10.0.0.1
+    hostname: names.cwalops.ca
+  internal_2:
+    ip: 192.168.0.111
+    hostname: names.cwalops.ca
+
+
+
+#===============================================================================
+# Networks
+#===============================================================================
+net_management:
+  id: 192.168.0.0
+  prefix: 24
+  cidr: 192.168.0.0/24
+  mask: 255.255.255.0
+  gateway_1: 192.168.0.1
+  dns: "{{dns.internal_2}}"
+net_dev:
+  id: 10.0.0.0
+  prefix: 24
+  cidr: 10.0.0.0/24
+  mask: 255.255.255.0
+  gateway_1: 10.0.0.1
+  dns: "{{dns.internal_1}}"
