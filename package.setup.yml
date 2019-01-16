@@ -18,7 +18,7 @@
         name:        "{{packages}}"
         state:       latest
       become:        true
-
+   
     - name:          Install docker
       include_role:
         name:        docker/base
