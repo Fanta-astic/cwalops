@@ -53,3 +53,20 @@ net_dev:
   mask: 255.255.255.0
   gateway_1: 10.0.0.1
   dns: "{{dns.internal_1}}"
+
+#===============================================================================
+# PKI
+#===============================================================================
+pki:
+  cert:
+    src: files/pki/{{vhost|default(domain)}}/cert.pem
+    dest: /etc/pki/tls/certs/{{vhost|default(domain)}}/
+  privkey:
+    src: files/pki/{{vhost|default(domain)}}/key.pem
+    dest: /etc/pki/tls/private/{{vhost|default(domain)}}_key.pem
+  chain:
+    src: files/pki/{{vhost|default(domain)}}/chain.pem
+    dest: /etc/pki/tls/certs/{{vhost|default(domain)}}/chain.pem
+  fullchain:
+    src: files/pki/{{vhost|default(domain)}}/fullchain.pem
+    dest: /etc/pki/tls/certs/{{vhost|default(domain)}}/fullchain.pem
