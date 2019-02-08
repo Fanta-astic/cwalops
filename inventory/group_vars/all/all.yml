@@ -70,3 +70,17 @@ pki:
   fullchain:
     src: files/pki/{{vhost|default(domain)}}/fullchain.pem
     dest: /etc/pki/tls/certs/{{vhost|default(domain)}}/fullchain.pem
+
+
+#===============================================================================
+# Packages
+#===============================================================================
+packages:
+  - net-tools
+  - vim
+  - libselinux-python
+  - git
+  - nmap
+  - nmap-ncat
+  - telnet
+  - tcpdump
